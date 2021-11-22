@@ -15,7 +15,7 @@ function validate_jwt(req, res, next) {
                             rediscl.get(req.body.uid.toString(), (err, val) => {
                                 let redis_token = (err ? null : (val ? JSON.parse(val) : null)); 
                                 if (!redis_token || redis_token.refresh_token !== refreshtoken) {
-                                    reject("Error");
+                                    reject(new Error("Error"));
                                 } else {
                                     if (redis_token.expires > new Date()) {
                                         let refresh_token = generate_refresh_token(64);
@@ -60,7 +60,7 @@ function validate_jwt(req, res, next) {
                     }
                 });
             } else {
-                reject("Token missing");
+                reject(new Error("Token missing"));
             }
         });
     }

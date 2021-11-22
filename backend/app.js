@@ -25,7 +25,7 @@ app.use(async function (req, res, next) {
     try {
         await validate_jwt(req, res, next);
     } catch (err) {
-        next(new Error(err));
+        next(err);
     }
     next();
 });
